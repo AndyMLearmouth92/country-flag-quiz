@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-flag',
@@ -9,4 +9,7 @@ import { Component, computed, input } from '@angular/core';
 })
 export class Flag {
   quizData = input<any>();
+  index = signal(0);
+  currentCountry = computed(() => this.quizData()[this.index()]);
+  quizFlagImage = computed(() => this.quizData()[this.index()].flag.url_png);
 }

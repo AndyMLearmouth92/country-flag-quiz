@@ -1,17 +1,32 @@
-<div class="card bg-base-100 w-96 shadow-sm">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes"
-    />
+<div class="card bg-base-100 min-w-3xl min-h-3xl shadow-sm flex place-content-center bg-slate-500">
+  <h2 class="text-3xl">Question 1 of 10</h2>
+  <figure class="mt-8">
+    <img [src]="quizFlagImage()" alt="Shoes" class="border-2 rounded-lg" />
   </figure>
   <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
+    <h3 class="card-title">Clues</h3>
     <p>
       A card component has a figure, a body part, and inside body there are title and actions parts
     </p>
+
+    <div class="flex items-center gap-2">
+      <label for="guessCountry" class="font-medium text-lg">Guess:</label>
+      <input
+        id="guessCountry"
+        type="text"
+        class="input text-gray-700"
+        placeholder="Enter country"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <h3 class="card-title">Wrong guesses</h3>
+      <ul class="flex justify-start">
+        <li>USA</li>
+      </ul>
+    </div>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
+      <button class="btn btn-primary">Submit guess</button>
     </div>
   </div>
 </div>
