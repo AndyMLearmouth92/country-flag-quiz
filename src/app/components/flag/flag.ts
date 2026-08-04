@@ -1,4 +1,5 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, input, model, output, signal } from '@angular/core';
+import { Quiz } from '../../services/quiz/quiz';
 
 @Component({
   selector: 'app-flag',
@@ -8,8 +9,17 @@ import { Component, computed, input, signal } from '@angular/core';
   standalone: true,
 })
 export class Flag {
-  quizData = input<any>();
-  index = signal(0);
-  currentCountry = computed(() => this.quizData()[this.index()]);
-  quizFlagImage = computed(() => this.quizData()[this.index()].flag.url_png);
+  quizService = inject(Quiz);
+  questionNumber = computed(() => this.quizService.index() + 1);
+  currentCountryData = input<any>();
+  currentGuess = signal('');
+  guessSubmitted = output<string>();
+  quizFlagImage = computed(() => this.currentCountryData().flag.url_png);
+  correctCountry = computed(() => this.currentCountryData().names.official);
+
+  submitGuess() {
+    console.log('currentGuess', this.currentGuess());
+    this.guessSubmitted.emit(this.currentGuess());
+    this.currentGuess.set('');
+  }
 }

@@ -1,14 +1,9 @@
 <div class="card bg-base-100 min-w-3xl min-h-3xl shadow-sm flex place-content-center bg-slate-500">
-  <h2 class="text-3xl">Question 1 of 10</h2>
+  <h2 class="text-3xl">World Flag Challenge</h2>
   <figure class="mt-8">
     <img [src]="quizFlagImage()" alt="Shoes" class="border-2 rounded-lg" />
   </figure>
   <div class="card-body">
-    <h3 class="card-title">Clues</h3>
-    <p>
-      A card component has a figure, a body part, and inside body there are title and actions parts
-    </p>
-
     <div class="flex items-center gap-2">
       <label for="guessCountry" class="font-medium text-lg">Guess:</label>
       <input
@@ -16,17 +11,25 @@
         type="text"
         class="input text-gray-700"
         placeholder="Enter country"
+        [value]="currentGuess()"
+        (input)="currentGuess.set($event.target.value)"
       />
     </div>
 
+    <h1>{{ correctCountry() }}</h1>
     <div class="flex flex-col gap-2">
-      <h3 class="card-title">Wrong guesses</h3>
+      <h3 class="card-title">Wrong guesses:</h3>
       <ul class="flex justify-start">
         <li>USA</li>
       </ul>
     </div>
+    <h3 class="card-title">Clues</h3>
+    <p>
+      A card component has a figure, a body part, and inside body there are title and actions parts
+    </p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">Submit guess</button>
+      <button class="btn btn-primary" (click)="submitGuess()">Submit guess</button>
     </div>
+    <h3>Question {{ questionNumber() }} of 10</h3>
   </div>
 </div>

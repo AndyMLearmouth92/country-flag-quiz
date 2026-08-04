@@ -6,7 +6,6 @@ import { Injectable, inject } from '@angular/core';
 })
 export class Api {
   private httpClient = inject(HttpClient);
-  countryData = [];
 
   getCountryData() {
     return this.httpClient.get<any>('https://api.restcountries.com/countries/v5?limit=100', {

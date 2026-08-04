@@ -1,1 +1,4 @@
-<app-flag [quizData]="quizData()" />
+<app-flag
+  [currentCountryData]="quizService.currentCountryData()"
+  (guessSubmitted)="onGuessSubmitted($event)"
+/>

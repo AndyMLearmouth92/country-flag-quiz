@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, model, signal } from '@angular/core';
 import { Flag } from '../flag/flag';
 import { Quiz } from '../../services/quiz/quiz';
 
@@ -10,13 +10,8 @@ import { Quiz } from '../../services/quiz/quiz';
 })
 export class Game implements OnInit {
   quizService = inject(Quiz);
-  quizData = signal([]);
   ngOnInit(): void {
     this.quizService.startQuiz().subscribe({
-      next: (res: any) => {
-        this.quizData.set(res);
-        console.log('quizDataGameComponent', this.quizData());
-      },
       error: (error) => {
         console.log(error);
       },
@@ -24,5 +19,9 @@ export class Game implements OnInit {
         console.log('Complete');
       },
     });
+  }
+
+  onGuessSubmitted(guessSubmitted: string) {
+    this.quizService.isUserGuessCorrect(guessSubmitted);
   }
 }
