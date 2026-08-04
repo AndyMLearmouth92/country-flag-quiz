@@ -26,9 +26,21 @@
       </ol>
     </div>
     <h3 class="card-title">Clues</h3>
-    <p>
-      A card component has a figure, a body part, and inside body there are title and actions parts
-    </p>
+    <ul>
+      <li>Continent: {{ this.quizService.continents() }}</li>
+      <li>
+        {{
+          this.quizService.borderingCountries().length === 1
+            ? 'Bordering Country:'
+            : 'Bordering Countries:'
+        }}
+        {{ this.quizService.borderingCountries() || 'None' }}
+      </li>
+      <!-- <li>Population: {{ this.quizService.currentCountryData().population }}</li> -->
+      <li>Language: {{ this.quizService.languages() }}</li>
+      <li>Currency: {{ this.quizService.currencies() }}</li>
+      <li>Capital: {{ this.quizService.capitalCities() }}</li>
+    </ul>
     <div class="card-actions justify-end">
       <button class="btn btn-primary" (click)="submitGuess()">Submit guess</button>
     </div>

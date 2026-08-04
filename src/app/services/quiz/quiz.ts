@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { map } from 'rxjs';
 import { Api } from '../api/api';
+import { COUNTRY_LOOKUP } from '../../constants/country-lookup';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,28 @@ export class Quiz {
   correctlyAnsweredQuestions = signal(0);
   maxNumberOfGuesses = 5;
   incorrectGuesses = signal<string[]>([]);
+  borderingCountries = computed(() =>
+    this.formatList(
+      this.currentCountryData().borders.map(
+        (borderingCountry: string) => COUNTRY_LOOKUP[borderingCountry],
+      ),
+    ),
+  );
+  capitalCities = computed(() =>
+    this.formatList(
+      this.currentCountryData().capitals.flatMap((capitalCity: any) => capitalCity.name),
+    ),
+  );
+  continents = computed(() => this.formatList(this.currentCountryData().continents));
+
+  currencies = computed(() =>
+    this.formatList(this.currentCountryData().currencies.flatMap((currency: any) => currency.name)),
+  );
+
+  languages = computed(() =>
+    this.formatList(this.currentCountryData().languages.flatMap((language: any) => language.name)),
+  );
+
   startQuiz() {
     return this.apiService
       .getCountryData()
@@ -65,5 +88,18 @@ export class Quiz {
       this.index.update((n) => n + 1);
       this.incorrectGuesses.set([]);
     }
+  }
+
+  formatList(items: string[]): string {
+    if (items.length === 0) {
+      return '';
+    }
+    if (items.length === 1) {
+      return items[0];
+    }
+    if (items.length === 2) {
+      return `${items[0]} and ${items[1]}`;
+    }
+    return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
   }
 }
