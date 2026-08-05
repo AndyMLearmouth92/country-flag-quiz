@@ -18,7 +18,6 @@ export class Flag {
   correctCountry = computed(() => this.currentCountryData().names.official);
 
   submitGuess() {
-    console.log('currentGuess', this.currentGuess());
     this.guessSubmitted.emit(this.currentGuess());
     this.currentGuess.set('');
   }

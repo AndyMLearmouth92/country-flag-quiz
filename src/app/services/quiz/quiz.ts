@@ -13,7 +13,6 @@ export class Quiz {
   correctlyAnsweredQuestions = signal(0);
   maxNumberOfGuesses = 5;
   incorrectGuesses = signal<string[]>([]);
-
   startQuiz() {
     return this.apiService
       .getCountryData()
