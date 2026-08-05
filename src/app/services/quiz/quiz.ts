@@ -11,7 +11,6 @@ export class Quiz {
   index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctlyAnsweredQuestions = signal(0);
-  numberOfGuesses = signal(0);
   maxNumberOfGuesses = 5;
   incorrectGuesses = signal<string[]>([]);
 
@@ -46,19 +45,26 @@ export class Quiz {
       ...country.names.alternates,
     ];
 
-    correctCountryNames.some((correctName) => {
-      if (userGuess === correctName) {
-        this.correctlyAnsweredQuestions.update(
-          (numberOfCorrectlyAnsweredQuestions) => numberOfCorrectlyAnsweredQuestions + 1,
-        );
-        this.index.update((numberOfCorrectQuestions) => numberOfCorrectQuestions + 1);
-        this.numberOfGuesses.set(0);
-      } else {
-        this.numberOfGuesses.update((currNumberOfGuesses) => currNumberOfGuesses + 1);
-        this.incorrectGuesses.update((guesses) =>
-          guesses.includes(userGuess) ? guesses : [...guesses, userGuess],
-        );
-      }
-    });
+    const isCorrect = correctCountryNames.some(
+      (correctName) => userGuess.trim().toLowerCase() === correctName.trim().toLowerCase(),
+    );
+
+    if (isCorrect) {
+      this.correctlyAnsweredQuestions.update((n) => n + 1);
+      this.index.update((i) => i + 1);
+      this.incorrectGuesses.set([]);
+    } else {
+      this.incorrectGuesses.update((guesses) =>
+        guesses.includes(userGuess) ? guesses : [...guesses, userGuess],
+      );
+      this.guessesExpired();
+    }
+  }
+
+  guessesExpired() {
+    if (this.incorrectGuesses().length === this.maxNumberOfGuesses) {
+      this.index.update((n) => n + 1);
+      this.incorrectGuesses.set([]);
+    }
   }
 }
