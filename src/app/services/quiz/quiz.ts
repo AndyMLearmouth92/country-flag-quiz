@@ -36,6 +36,29 @@ export class Quiz {
     this.formatList(this.currentCountryData().languages.flatMap((language: any) => language.name)),
   );
 
+  clues = computed(() => [
+    {
+      label: 'Continent',
+      value: this.continents(),
+    },
+    {
+      label: this.borderingCountries().length === 1 ? 'Bordering Country' : 'Bordering Countries',
+      value: this.borderingCountries() || 'None',
+    },
+    {
+      label: this.languages.length === 1 ? 'Language' : 'Languages',
+      value: this.languages(),
+    },
+    {
+      label: this.currencies.length === 1 ? 'Currency' : 'Currencies',
+      value: this.currencies(),
+    },
+    {
+      label: 'Capital City',
+      value: this.capitalCities(),
+    },
+  ]);
+
   startQuiz() {
     return this.apiService
       .getCountryData()
