@@ -1,0 +1,12 @@
+<div class="flex items-center gap-2">
+  <label for="guessCountry" class="font-medium text-lg">Guess:</label>
+
+  <input
+    id="guessCountry"
+    type="text"
+    class="input text-gray-700"
+    placeholder="Enter country"
+    [value]="currentGuess()"
+    (input)="updateGuess($event)"
+  />
+</div>

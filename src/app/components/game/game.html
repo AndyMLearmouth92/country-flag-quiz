@@ -1,4 +1,18 @@
-<app-flag
-  [currentCountryData]="quizService.currentCountryData()"
-  (guessSubmitted)="onGuessSubmitted($event)"
-/>
+<div class="card bg-base-100 min-w-3xl min-h-3xl shadow-sm flex place-content-center bg-slate-500">
+  <app-heading />
+  <app-flag />
+  <div class="card-body">
+    <app-input [currentGuess]="currentGuess()" (guessChanged)="currentGuess.set($event)" />
+    <!-- <h1>{{ correctCountry() }}</h1> -->
+    <div class="flex flex-col gap-2">
+      <h3 class="card-title">Wrong guesses:</h3>
+      <app-list [items]="quizService.incorrectGuesses()" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <h3 class="card-title">Clues:</h3>
+      <app-list [items]="quizService.visibleClues()" />
+    </div>
+    <app-button (submittedGuess)="submittedGuess()" />
+    <h3>Question {{ questionNumber() }} of 10</h3>
+  </div>
+</div>

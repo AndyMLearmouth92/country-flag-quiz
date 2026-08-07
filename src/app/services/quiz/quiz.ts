@@ -12,7 +12,7 @@ export class Quiz {
   index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctlyAnsweredQuestions = signal(0);
-  maxNumberOfGuesses = 5;
+  maxNumberOfGuesses = 6;
   incorrectGuesses = signal<string[]>([]);
   borderingCountries = computed(() =>
     this.formatList(
@@ -21,43 +21,53 @@ export class Quiz {
       ),
     ),
   );
-  capitalCities = computed(() =>
-    this.formatList(
-      this.currentCountryData().capitals.flatMap((capitalCity: any) => capitalCity.name),
-    ),
-  );
-  continents = computed(() => this.formatList(this.currentCountryData().continents));
-
-  currencies = computed(() =>
-    this.formatList(this.currentCountryData().currencies.flatMap((currency: any) => currency.name)),
-  );
+  continents = computed(() => this.currentCountryData().continents);
 
   languages = computed(() =>
-    this.formatList(this.currentCountryData().languages.flatMap((language: any) => language.name)),
+    this.currentCountryData().languages.map((language: any) => language.name),
+  );
+
+  currencies = computed(() =>
+    this.currentCountryData().currencies.map((currency: any) => currency.name),
+  );
+
+  capitalCities = computed(() =>
+    this.currentCountryData().capitals.map((capital: any) => capital.name),
   );
 
   clues = computed(() => [
     {
-      label: 'Continent',
-      value: this.continents(),
+      label: this.continents.length > 1 ? 'Continents' : 'Continent',
+      value: this.formatList(this.currentCountryData().continents),
     },
     {
-      label: this.borderingCountries().length === 1 ? 'Bordering Country' : 'Bordering Countries',
-      value: this.borderingCountries() || 'None',
+      label:
+        this.currentCountryData().borders.length === 1
+          ? 'Bordering Country'
+          : 'Bordering Countries',
+      value: this.formatList(
+        this.currentCountryData().borders.map((border: string) => COUNTRY_LOOKUP[border]),
+      ),
     },
     {
-      label: this.languages.length === 1 ? 'Language' : 'Languages',
-      value: this.languages(),
+      label: this.languages().length > 1 ? 'Language' : 'Languages',
+      value: this.formatList(this.languages()),
     },
     {
-      label: this.currencies.length === 1 ? 'Currency' : 'Currencies',
-      value: this.currencies(),
+      label: this.currencies().length > 1 ? 'Currency' : 'Currencies',
+      value: this.formatList(this.currencies()),
     },
     {
       label: 'Capital City',
-      value: this.capitalCities(),
+      value: this.formatList(this.capitalCities()),
     },
   ]);
+
+  visibleClues = computed(() =>
+    this.clues()
+      .slice(0, this.incorrectGuesses().length)
+      .map((clue) => `${clue.label}: ${clue.value}`),
+  );
 
   startQuiz() {
     return this.apiService
@@ -78,6 +88,7 @@ export class Quiz {
       }
     }
     this.quizDataCountries.set(selectedCountries);
+    console.log('Selected Countries', selectedCountries);
     return selectedCountries;
   }
 
@@ -115,7 +126,7 @@ export class Quiz {
 
   formatList(items: string[]): string {
     if (items.length === 0) {
-      return '';
+      return 'None';
     }
     if (items.length === 1) {
       return items[0];
