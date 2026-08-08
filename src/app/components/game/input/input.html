@@ -1,12 +1,19 @@
-<div class="flex items-center gap-2">
-  <label for="guessCountry" class="font-medium text-lg">Guess:</label>
-
-  <input
-    id="guessCountry"
-    type="text"
-    class="input text-gray-700"
-    placeholder="Enter country"
-    [value]="currentGuess()"
-    (input)="updateGuess($event)"
-  />
+<div class="flex items-center">
+  <fieldset>
+    <legend class="fieldset-legend font-medium text-lg font-semibold text-white">
+      Guess the country
+    </legend>
+    <input
+      id="guessCountry"
+      type="text"
+      class="input input-md text-gray-700 w-full"
+      placeholder="Enter country"
+      [value]="currentGuess()"
+      (input)="updateGuess($event)"
+    />
+    <p class="label font-medium text-md font-semibold text-white">
+      {{ this.quizService.maxNumberOfGuesses - this.quizService.incorrectGuesses().length }} guesses
+      remaining
+    </p>
+  </fieldset>
 </div>

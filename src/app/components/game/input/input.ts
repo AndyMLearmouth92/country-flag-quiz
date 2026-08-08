@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { Quiz } from '../../../services/quiz/quiz';
 
 @Component({
   selector: 'app-input',
@@ -7,6 +8,7 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './input.css',
 })
 export class Input {
+  quizService = inject(Quiz);
   currentGuess = input('');
   guessChanged = output<any>();
 

@@ -1,18 +1,28 @@
-<div class="card bg-base-100 min-w-3xl min-h-3xl shadow-sm flex place-content-center bg-slate-500">
+<div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500">
   <app-heading />
-  <app-flag />
+  <h3 class="font-bold text-xl">Question {{ questionNumber() }} of 10</h3>
+  <div class="flex justify-center">
+    <app-flag class="flex justify-center-safe max-w-4/5" />
+  </div>
   <div class="card-body">
-    <app-input [currentGuess]="currentGuess()" (guessChanged)="currentGuess.set($event)" />
+    <div class="flex flex-row items-end gap-0">
+      <app-input
+        class="mr-8"
+        [currentGuess]="currentGuess()"
+        (guessChanged)="currentGuess.set($event)"
+      />
+      <app-button class="mb-5" (submittedGuess)="submittedGuess()" />
+    </div>
     <!-- <h1>{{ correctCountry() }}</h1> -->
-    <div class="flex flex-col gap-2">
-      <h3 class="card-title">Wrong guesses:</h3>
-      <app-list [items]="quizService.incorrectGuesses()" />
-    </div>
-    <div class="flex flex-col gap-2">
-      <h3 class="card-title">Clues:</h3>
-      <app-list [items]="quizService.visibleClues()" />
-    </div>
-    <app-button (submittedGuess)="submittedGuess()" />
-    <h3>Question {{ questionNumber() }} of 10</h3>
+    @if (this.quizService.incorrectGuesses().length) {
+      <div class="flex flex-col gap-2">
+        <h3 class="card-title text-md font-semibold">Wrong guesses:</h3>
+        <app-list [items]="quizService.incorrectGuesses()" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="card-title text-md font-semibold">Clues:</h3>
+        <app-list [items]="quizService.visibleClues()" />
+      </div>
+    }
   </div>
 </div>
