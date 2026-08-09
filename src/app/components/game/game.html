@@ -11,7 +11,11 @@
         [currentGuess]="currentGuess()"
         (guessChanged)="currentGuess.set($event)"
       />
-      <app-button class="mb-5" (submittedGuess)="submittedGuess()" />
+      <app-button
+        class="mb-5"
+        (submittedGuess)="submittedGuess()"
+        [isButtonDisabled]="isButtonDisabled()"
+      />
     </div>
     <!-- <h1>{{ correctCountry() }}</h1> -->
     @if (this.quizService.incorrectGuesses().length) {

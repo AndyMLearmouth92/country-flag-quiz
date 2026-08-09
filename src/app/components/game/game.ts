@@ -16,6 +16,7 @@ export class Game implements OnInit {
   quizService = inject(Quiz);
   questionNumber = computed(() => this.quizService.index() + 1);
   currentGuess = signal('');
+  isButtonDisabled = computed(() => !this.currentGuess().trim());
   ngOnInit(): void {
     this.quizService.startQuiz().subscribe({
       error: (error) => {

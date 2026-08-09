@@ -93,6 +93,10 @@ export class Quiz {
   }
 
   isUserGuessCorrect(userGuess: string) {
+    const santisedGuess = userGuess.trim().toLowerCase();
+    if (!santisedGuess) {
+      return;
+    }
     const country = this.currentCountryData();
 
     const correctCountryNames = [
@@ -102,7 +106,7 @@ export class Quiz {
     ];
 
     const isCorrect = correctCountryNames.some(
-      (correctName) => userGuess.trim().toLowerCase() === correctName.trim().toLowerCase(),
+      (correctName) => santisedGuess === correctName.trim().toLowerCase(),
     );
 
     if (isCorrect) {
@@ -111,7 +115,7 @@ export class Quiz {
       this.incorrectGuesses.set([]);
     } else {
       this.incorrectGuesses.update((guesses) =>
-        guesses.includes(userGuess) ? guesses : [...guesses, userGuess],
+        guesses.includes(santisedGuess) ? guesses : [...guesses, santisedGuess],
       );
       this.guessesExpired();
     }

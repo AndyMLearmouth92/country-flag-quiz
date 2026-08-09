@@ -1,3 +1,9 @@
 <div class="card-actions justify-end">
-  <button class="btn btn-primary text-md" (click)="onSubmitted()">Submit</button>
+  <button
+    class="btn btn-primary text-md disabled:bg-slate-300 disabled:text-slate-800 disabled:opacity-100"
+    [disabled]="isButtonDisabled()"
+    (click)="onSubmitted()"
+  >
+    Submit
+  </button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { Quiz } from '../../../services/quiz/quiz';
 
 @Component({
@@ -9,8 +9,8 @@ import { Quiz } from '../../../services/quiz/quiz';
 })
 export class Input {
   quizService = inject(Quiz);
-  currentGuess = input('');
-  guessChanged = output<any>();
+  currentGuess = input<string>('');
+  guessChanged = output<string>();
 
   updateGuess(event: Event) {
     const input = event.target as HTMLInputElement;
