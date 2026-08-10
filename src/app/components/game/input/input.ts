@@ -11,6 +11,7 @@ export class Input {
   quizService = inject(Quiz);
   currentGuess = input<string>('');
   guessChanged = output<string>();
+  invalidInputError = input(false);
 
   updateGuess(event: Event) {
     const input = event.target as HTMLInputElement;

@@ -17,6 +17,7 @@ export class Game implements OnInit {
   questionNumber = computed(() => this.quizService.index() + 1);
   currentGuess = signal('');
   isButtonDisabled = computed(() => !this.currentGuess().trim());
+  invalidInputError = signal(false);
   ngOnInit(): void {
     this.quizService.startQuiz().subscribe({
       error: (error) => {
@@ -29,7 +30,11 @@ export class Game implements OnInit {
   }
 
   submittedGuess() {
-    this.quizService.isUserGuessCorrect(this.currentGuess());
-    this.currentGuess.set('');
+    const guessesClearsInput = this.quizService.isUserGuessCorrect(this.currentGuess());
+    this.invalidInputError.set(guessesClearsInput === 'duplicate');
+
+    if (guessesClearsInput !== 'duplicate') {
+      this.currentGuess.set('');
+    }
   }
 }

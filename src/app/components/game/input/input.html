@@ -1,19 +1,25 @@
-<div class="flex items-center">
-  <fieldset>
+<div class="flex items-center w-full">
+  <fieldset class="w-full">
     <legend class="fieldset-legend font-medium text-lg font-semibold text-white">
       Guess the country
     </legend>
     <input
       id="guessCountry"
       type="text"
-      class="input input-md text-gray-700 w-full"
+      class="input input-md text-gray-700 w-full {{ invalidInputError() && 'input-error' }}"
       placeholder="Enter country"
       [value]="currentGuess()"
       (input)="updateGuess($event)"
     />
-    <p class="label font-medium text-md font-semibold text-white">
-      {{ this.quizService.maxNumberOfGuesses - this.quizService.incorrectGuesses().length }} guesses
-      remaining
-    </p>
+    @if (invalidInputError()) {
+      <p class="label text-error font-medium text-md font-semibold">
+        You have already guessed that country
+      </p>
+    } @else {
+      <p class="label font-medium text-md font-semibold text-white">
+        {{ this.quizService.maxNumberOfGuesses - this.quizService.incorrectGuesses().length }}
+        guesses remaining
+      </p>
+    }
   </fieldset>
 </div>
