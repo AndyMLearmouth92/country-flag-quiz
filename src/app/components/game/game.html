@@ -9,7 +9,7 @@
       <app-input
         class="block w-3/5 mr-8"
         [currentGuess]="currentGuess()"
-        (guessChanged)="currentGuess.set($event)"
+        (guessChanged)="guessChanged($event)"
         [invalidInputError]="invalidInputError()"
       />
       <app-button

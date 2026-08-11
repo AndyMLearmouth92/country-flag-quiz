@@ -29,6 +29,11 @@ export class Game implements OnInit {
     });
   }
 
+  guessChanged(guess: string) {
+    this.currentGuess.set(guess);
+    this.invalidInputError.set(false);
+  }
+
   submittedGuess() {
     const guessesClearsInput = this.quizService.isUserGuessCorrect(this.currentGuess());
     this.invalidInputError.set(guessesClearsInput === 'duplicate');
