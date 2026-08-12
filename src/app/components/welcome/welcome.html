@@ -1,10 +1,13 @@
-<div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500">
+<div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500 w-2xl">
   <app-heading />
-  @for (continent of quizContinents; track continent) {
-    <li>
-      <button>{{ continent }}</button>
-    </li>
-  }
+  <h2>Pick a location to start the flag quiz</h2>
+  <ul class="flex justify-between flex-wrap p-10">
+    @for (continent of quizContinents; track continent) {
+      <li class="mb-4">
+        <app-button [content]="continent" />
+      </li>
+    }
+  </ul>
   <div class="flex justify-center"></div>
   <div class="card-body">
     <div class="flex flex-row items-end gap-0"></div>

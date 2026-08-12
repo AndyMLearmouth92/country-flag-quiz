@@ -8,6 +8,7 @@ import { Component, input, output } from '@angular/core';
 })
 export class Button {
   submittedGuess = output();
+  content = input();
   isButtonDisabled = input();
 
   onSubmitted() {

@@ -4,7 +4,7 @@ import { Welcome } from '../welcome/welcome';
 
 @Component({
   selector: 'app-hero',
-  imports: [Game, Welcome],
+  imports: [Game],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })
