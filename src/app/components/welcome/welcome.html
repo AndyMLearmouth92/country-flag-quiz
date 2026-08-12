@@ -1,0 +1,12 @@
+<div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500">
+  <app-heading />
+  @for (continent of quizContinents; track continent) {
+    <li>
+      <button>{{ continent }}</button>
+    </li>
+  }
+  <div class="flex justify-center"></div>
+  <div class="card-body">
+    <div class="flex flex-row items-end gap-0"></div>
+  </div>
+</div>

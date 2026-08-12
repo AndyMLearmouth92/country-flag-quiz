@@ -94,8 +94,8 @@ export class Quiz {
 
   isUserGuessCorrect(userGuess: string) {
     const santisedGuess = userGuess.trim().toLowerCase();
-    if (!santisedGuess) {
-      return;
+    if (!santisedGuess || this.incorrectGuesses().includes(santisedGuess)) {
+      return 'duplicate';
     }
     const country = this.currentCountryData();
 
@@ -113,11 +113,13 @@ export class Quiz {
       this.correctlyAnsweredQuestions.update((n) => n + 1);
       this.index.update((i) => i + 1);
       this.incorrectGuesses.set([]);
+      return 'correct';
     } else {
       this.incorrectGuesses.update((guesses) =>
         guesses.includes(santisedGuess) ? guesses : [...guesses, santisedGuess],
       );
       this.guessesExpired();
+      return 'incorrect';
     }
   }
 
