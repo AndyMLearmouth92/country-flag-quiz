@@ -2,12 +2,14 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { map } from 'rxjs';
 import { Api } from '../api/api';
 import { COUNTRY_LOOKUP } from '../../constants/country-lookup';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Quiz {
   private apiService = inject(Api);
+  private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
   index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
@@ -113,12 +115,14 @@ export class Quiz {
       this.correctlyAnsweredQuestions.update((n) => n + 1);
       this.index.update((i) => i + 1);
       this.incorrectGuesses.set([]);
+      this.hasQuizEnded();
       return 'correct';
     } else {
       this.incorrectGuesses.update((guesses) =>
         guesses.includes(santisedGuess) ? guesses : [...guesses, santisedGuess],
       );
       this.guessesExpired();
+      this.hasQuizEnded();
       return 'incorrect';
     }
   }
@@ -141,5 +145,8 @@ export class Quiz {
       return `${items[0]} and ${items[1]}`;
     }
     return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
+  }
+  hasQuizEnded() {
+    this.index() > 9 && this.router.navigate(['end-game']);
   }
 }
