@@ -11,4 +11,8 @@ import { Button } from '../button/button';
 })
 export class Welcome {
   quizContinents = QUIZ_CONTINENTS;
+
+  selectContinent(continent: string) {
+    console.log('continent', continent);
+  }
 }

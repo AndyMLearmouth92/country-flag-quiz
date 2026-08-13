@@ -7,11 +7,11 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './button.css',
 })
 export class Button {
-  submittedGuess = output();
-  content = input();
-  isButtonDisabled = input();
+  content = input.required<string>();
+  isButtonDisabled = input<boolean>();
+  buttonClicked = output();
 
-  onSubmitted() {
-    this.submittedGuess.emit();
+  onClicked() {
+    this.buttonClicked.emit();
   }
 }

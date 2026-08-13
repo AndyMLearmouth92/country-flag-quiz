@@ -4,7 +4,7 @@
   <ul class="flex justify-between flex-wrap p-10">
     @for (continent of quizContinents; track continent) {
       <li class="mb-4">
-        <app-button [content]="continent" />
+        <app-button [content]="continent" (buttonClicked)="selectContinent(continent)" />
       </li>
     }
   </ul>
