@@ -12,12 +12,14 @@
         (guessChanged)="guessChanged($event)"
         [invalidInputError]="invalidInputError()"
       />
+      <div class="card-actions justify-end">
       <app-button
         class="mb-5"
         (buttonClicked)="submittedGuess()"
         [isButtonDisabled]="isButtonDisabled()"
         content="Submit"
       />
+      </div>
     </div>
     <!-- <h1>{{ correctCountry() }}</h1> -->
     @if (this.quizService.incorrectGuesses().length) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-heading',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './heading.html',
   styleUrl: './heading.css',
 })
-export class Heading {}
+export class Heading {
+  textContent = input('World Flag Challenge')
+}

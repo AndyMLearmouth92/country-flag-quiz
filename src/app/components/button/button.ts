@@ -9,6 +9,7 @@ import { Component, input, output } from '@angular/core';
 export class Button {
   content = input.required<string>();
   isButtonDisabled = input<boolean>();
+  width = input<string>('w-40')
   buttonClicked = output();
 
   onClicked() {
