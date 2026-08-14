@@ -12,22 +12,12 @@ import { List } from './list/list';
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
-export class Game implements OnInit {
+export class Game {
   quizService = inject(Quiz);
   questionNumber = computed(() => this.quizService.index() + 1);
   currentGuess = signal('');
   isButtonDisabled = computed(() => !this.currentGuess().trim());
   invalidInputError = signal(false);
-  ngOnInit(): void {
-    this.quizService.startQuiz().subscribe({
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        console.log('Complete');
-      },
-    });
-  }
 
   guessChanged(guess: string) {
     this.currentGuess.set(guess);

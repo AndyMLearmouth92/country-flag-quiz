@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Heading } from '../heading/heading';
-import { QUIZ_CONTINENTS } from '../../constants/country-lookup';
+import { QUIZ_REGIONS } from '../../constants/country-lookup';
 import { Button } from '../button/button';
+import { Quiz } from '../../services/quiz/quiz';
 
 @Component({
   selector: 'app-welcome',
@@ -10,9 +11,19 @@ import { Button } from '../button/button';
   styleUrl: './welcome.css',
 })
 export class Welcome {
-  quizContinents = QUIZ_CONTINENTS;
+  quizService = inject(Quiz);
+  quizRegions = QUIZ_REGIONS;
 
-  selectContinent(continent: string) {
-    console.log('continent', continent);
+  ngOnInit(): void {}
+
+  selectContinent(chosenRegion: string) {
+    this.quizService.startQuiz(chosenRegion).subscribe({
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('Complete');
+      },
+    });
   }
 }

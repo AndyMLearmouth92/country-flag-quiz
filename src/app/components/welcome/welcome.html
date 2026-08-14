@@ -2,9 +2,9 @@
   <app-heading />
   <h2>Pick a location to start the flag quiz</h2>
   <ul class="flex justify-between flex-wrap p-10">
-    @for (continent of quizContinents; track continent) {
+    @for (region of quizRegions; track region) {
       <li class="mb-4">
-        <app-button [content]="continent" (buttonClicked)="selectContinent(continent)" />
+        <app-button [content]="region" (buttonClicked)="selectContinent(region)" />
       </li>
     }
   </ul>
