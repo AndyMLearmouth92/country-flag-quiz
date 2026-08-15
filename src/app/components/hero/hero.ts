@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Game } from '../game/game';
-import { Welcome } from '../welcome/welcome';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
-  imports: [Welcome],
+  imports: [RouterOutlet],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })

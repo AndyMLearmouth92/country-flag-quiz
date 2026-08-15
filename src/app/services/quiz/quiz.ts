@@ -69,9 +69,9 @@ export class Quiz {
       .map((clue) => `${clue.label}: ${clue.value}`),
   );
 
-  startQuiz() {
+  startQuiz(chosenRegion: string) {
     return this.apiService
-      .getCountryData()
+      .getCountryData(chosenRegion)
       .pipe(map((response) => this.randomiseCountries(response.data.objects, 10)));
   }
 

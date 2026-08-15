@@ -197,4 +197,4 @@ export const COUNTRY_LOOKUP: Record<string, string> = {
   ZWE: 'Zimbabwe',
 };
 
-export const QUIZ_CONTINENTS = ['World', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+export const QUIZ_REGIONS = ['World', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
