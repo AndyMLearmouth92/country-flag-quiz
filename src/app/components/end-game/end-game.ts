@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Heading } from '../heading/heading';
 import { Button } from '../button/button';
 import { Quiz } from '../../services/quiz/quiz';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-end-game',
@@ -11,6 +12,7 @@ import { Quiz } from '../../services/quiz/quiz';
 })
 export class EndGame {
   quizService = inject(Quiz)
+  router = inject(Router)
   score = this.quizService.correctlyAnsweredQuestions()
   
   quizEndMessage() {
@@ -27,5 +29,15 @@ export class EndGame {
       return 'Great effort.';
     }
     return 'Perfect score!';
+  }
+
+  playQuizAgain(){
+    this.router.navigate(['/game'])
+    this.quizService.index.set(0)
+    this.quizService.correctlyAnsweredQuestions.set(0)
+  }
+
+  playQuizDifferentContinent(){
+    this.router.navigate([''])
   }
 }
