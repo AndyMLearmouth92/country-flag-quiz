@@ -13,7 +13,8 @@ export class Quiz {
   quizDataCountries = signal<any[]>([]);
   index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
-  correctlyAnsweredQuestions = signal(0);
+  correctAnswers = signal(0);
+  score = signal(0);
   maxNumberOfGuesses = 6;
   incorrectGuesses = signal<string[]>([]);
   borderingCountries = computed(() =>
@@ -112,8 +113,9 @@ export class Quiz {
     );
 
     if (isCorrect) {
-      this.correctlyAnsweredQuestions.update((n) => n + 1);
+      this.correctAnswers.update((n) => n + 1);
       this.index.update((i) => i + 1);
+      this.score.update((i) => i + (this.maxNumberOfGuesses - this.incorrectGuesses().length))
       this.incorrectGuesses.set([]);
       this.hasQuizEnded();
       return 'correct';
