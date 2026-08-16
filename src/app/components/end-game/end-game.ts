@@ -13,19 +13,20 @@ import { Router } from '@angular/router';
 export class EndGame {
   quizService = inject(Quiz)
   router = inject(Router)
-  score = this.quizService.correctlyAnsweredQuestions()
+  questionsCorrect = this.quizService.correctAnswers()
+  score = this.quizService.score()
   
   quizEndMessage() {
-    if (this.score < 3) {
+    if (this.score < 18) {
       return 'Better luck next time.';
     }
-    if (this.score < 6) {
+    if (this.score < 36) {
       return 'Ok effort, but more practice needed.';
     }
-    if (this.score < 8) {
+    if (this.score < 48) {
       return 'Good effort.';
     }
-    if (this.score < 10) {
+    if (this.score < 60) {
       return 'Great effort.';
     }
     return 'Perfect score!';
@@ -34,7 +35,7 @@ export class EndGame {
   playQuizAgain(){
     this.router.navigate(['/game'])
     this.quizService.index.set(0)
-    this.quizService.correctlyAnsweredQuestions.set(0)
+    this.quizService.correctAnswers.set(0)
   }
 
   playQuizDifferentContinent(){
