@@ -33,9 +33,19 @@ export class EndGame {
   }
 
   playQuizAgain(){
-    this.router.navigate(['/game'])
-    this.quizService.index.set(0)
-    this.quizService.correctAnswers.set(0)
+    this.quizService.startQuiz(this.quizService.chosenRegion()).subscribe({
+      next: () => {
+        this.quizService.index.set(0)
+        this.quizService.correctAnswers.set(0)
+        this.router.navigate(['/game']);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('Complete play quiz again');
+      },
+    })
   }
 
   playQuizDifferentContinent(){
