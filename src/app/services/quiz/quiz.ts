@@ -11,12 +11,13 @@ export class Quiz {
   private apiService = inject(Api);
   private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
-  index = signal(0);
+  index = signal(9);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctAnswers = signal(0);
   score = signal(0);
   maxNumberOfGuesses = 6;
   incorrectGuesses = signal<string[]>([]);
+  chosenRegion = signal<string>('')
   borderingCountries = computed(() =>
     this.formatList(
       this.currentCountryData().borders.map(
@@ -39,9 +40,14 @@ export class Quiz {
   );
 
   clues = computed(() => [
-    {
+    this.chosenRegion() === 'World' ? {
       label: this.continents.length > 1 ? 'Continents' : 'Continent',
       value: this.formatList(this.currentCountryData().continents),
+    }
+    : 
+    { 
+      label: 'Subregion',
+      value: this.currentCountryData().subregion
     },
     {
       label:
@@ -115,7 +121,7 @@ export class Quiz {
     if (isCorrect) {
       this.correctAnswers.update((n) => n + 1);
       this.index.update((i) => i + 1);
-      this.score.update((i) => i + (this.maxNumberOfGuesses - this.incorrectGuesses().length))
+      this.score.update((s) => s + (this.maxNumberOfGuesses - this.incorrectGuesses().length))
       this.incorrectGuesses.set([]);
       this.hasQuizEnded();
       return 'correct';
