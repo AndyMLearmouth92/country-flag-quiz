@@ -72,3 +72,10 @@ export interface Language {
 export interface CountryMeta {
   lastUpdatedTimestamp: number;
 }
+
+export interface QuizResult {
+  countryName: string
+  isCorrect: boolean
+  numberOfGuesses: number
+  questionPoints: number
+}

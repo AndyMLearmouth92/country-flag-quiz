@@ -3,6 +3,7 @@ import { map } from 'rxjs';
 import { Api } from '../api/api';
 import { COUNTRY_LOOKUP } from '../../constants/country-lookup';
 import { Router } from '@angular/router';
+import { QuizResult } from './country.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +12,14 @@ export class Quiz {
   private apiService = inject(Api);
   private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
-  index = signal(9);
+  index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctAnswers = signal(0);
   score = signal(0);
   maxNumberOfGuesses = 6;
   incorrectGuesses = signal<string[]>([]);
   chosenRegion = signal<string>('')
+  quizResult = signal<QuizResult[]>([])
   borderingCountries = computed(() =>
     this.formatList(
       this.currentCountryData().borders.map(
@@ -119,9 +121,10 @@ export class Quiz {
     );
 
     if (isCorrect) {
+      this.score.update((s) => s + (this.maxNumberOfGuesses - this.incorrectGuesses().length))
+      this.mapQuizResult(true)
       this.correctAnswers.update((n) => n + 1);
       this.index.update((i) => i + 1);
-      this.score.update((s) => s + (this.maxNumberOfGuesses - this.incorrectGuesses().length))
       this.incorrectGuesses.set([]);
       this.hasQuizEnded();
       return 'correct';
@@ -137,6 +140,7 @@ export class Quiz {
 
   guessesExpired() {
     if (this.incorrectGuesses().length === this.maxNumberOfGuesses) {
+      this.mapQuizResult(false)
       this.index.update((n) => n + 1);
       this.incorrectGuesses.set([]);
     }
@@ -154,7 +158,19 @@ export class Quiz {
     }
     return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
   }
+
   hasQuizEnded() {
     this.index() > 9 && this.router.navigate(['end-game']);
+  }
+
+  mapQuizResult(isCorrect: boolean){
+    this.quizResult.update((questionResult) => [...questionResult,
+      {
+        countryName: this.currentCountryData().names.common,
+        isCorrect,
+        numberOfGuesses: this.incorrectGuesses().length,
+        questionPoints: this.maxNumberOfGuesses - this.incorrectGuesses().length
+      }
+    ])
   }
 }
