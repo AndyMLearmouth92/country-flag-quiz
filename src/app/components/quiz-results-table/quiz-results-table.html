@@ -1,0 +1,37 @@
+<div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead class="text-white text-center">
+        <tr>
+        <th>Flag</th>
+          <th>Country</th>
+          <th>Correct</th>
+          <th>Guesses</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <!-- rows -->
+         @for(result of this.quizService.quizResult(); track result){
+            <tr>
+                <td>
+                    <img
+                        [src]="result.flag"
+                        alt="Avatar Tailwind CSS Component" />
+                </td>
+                <td>
+                  {{result.countryName}}
+                  <br />
+                </td>
+                <td>
+                  {{result.isCorrect ? '✅' : '❌'}}
+                  <br />
+                </td>
+                <td>{{result.numberOfGuesses}}</td>
+                <td>{{result.questionPoints}}</td>
+              </tr>
+
+         }
+      </tbody>
+    </table>
+  </div>

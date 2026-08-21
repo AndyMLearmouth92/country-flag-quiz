@@ -12,7 +12,7 @@ export class Quiz {
   private apiService = inject(Api);
   private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
-  index = signal(0);
+  index = signal(9);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctAnswers = signal(0);
   score = signal(0);
@@ -169,7 +169,8 @@ export class Quiz {
         countryName: this.currentCountryData().names.common,
         isCorrect,
         numberOfGuesses: this.incorrectGuesses().length,
-        questionPoints: this.maxNumberOfGuesses - this.incorrectGuesses().length
+        questionPoints: this.maxNumberOfGuesses - this.incorrectGuesses().length,
+        flag: this.currentCountryData().flag.url_png
       }
     ])
   }

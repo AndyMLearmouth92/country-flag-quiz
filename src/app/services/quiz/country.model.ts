@@ -78,4 +78,5 @@ export interface QuizResult {
   isCorrect: boolean
   numberOfGuesses: number
   questionPoints: number
+  flag: string
 }
