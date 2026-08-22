@@ -1,37 +1,48 @@
-<div class="overflow-x-auto">
-    <table class="table">
-      <!-- head -->
-      <thead class="text-white text-center">
-        <tr>
-        <th>Flag</th>
-          <th>Country</th>
-          <th>Correct</th>
-          <th>Guesses</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <!-- rows -->
-         @for(result of this.quizService.quizResult(); track result){
-            <tr>
-                <td>
-                    <img
-                        [src]="result.flag"
-                        alt="Avatar Tailwind CSS Component" />
-                </td>
-                <td>
-                  {{result.countryName}}
-                  <br />
-                </td>
-                <td>
-                  {{result.isCorrect ? '✅' : '❌'}}
-                  <br />
-                </td>
-                <td>{{result.numberOfGuesses}}</td>
-                <td>{{result.questionPoints}}</td>
-              </tr>
 
-         }
-      </tbody>
-    </table>
+
+
+  <div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500 w-xl p10">
+    <app-heading textContent="Question results"/>
+    <div class="overflow-x-auto">
+        <table class="table">
+          <!-- head -->
+          <thead class="text-white text-center">
+            <tr>
+            <th>Flag</th>
+              <th>Country</th>
+              <th>Correct</th>
+              <th>Guesses</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <!-- rows -->
+             @for(result of this.quizService.quizResult(); track result){
+                <tr>
+                    <td>
+                        <img
+                            [src]="result.flag"
+                            [alt]="'flag of '+result.countryName" />
+                    </td>
+                    <td>
+                      {{result.countryName}}
+                      <br />
+                    </td>
+                    <td>
+                      {{result.isCorrect ? '✅' : '❌'}}
+                      <br />
+                    </td>
+                    <td>{{result.numberOfGuesses}}</td>
+                    <td>{{result.questionPoints}}</td>
+                  </tr>
+    
+             }
+          </tbody>
+        </table>
+      </div>
+    <div class="flex flex-col mb-5 mt-4">
+      <app-button class="" content="Back" width="w-60" (click)="backToEndGame()"/>
+     
+    </div>
   </div>
+  

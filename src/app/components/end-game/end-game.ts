@@ -7,7 +7,7 @@ import { QuizResultsTable } from '../quiz-results-table/quiz-results-table';
 
 @Component({
   selector: 'app-end-game',
-  imports: [Heading, Button, QuizResultsTable],
+  imports: [Heading, Button],
   templateUrl: './end-game.html',
   styleUrl: './end-game.css',
 })
@@ -51,5 +51,9 @@ export class EndGame {
 
   playQuizDifferentContinent(){
     this.router.navigate([''])
+  }
+
+  showQuizResults(){
+    this.router.navigate(['/game-results'])
   }
 }

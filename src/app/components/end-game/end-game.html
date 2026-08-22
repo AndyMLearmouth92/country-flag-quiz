@@ -1,13 +1,18 @@
 <div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500 w-xl p10">
   <app-heading textContent="Quiz Complete"/>
-  <h2>{{quizEndMessage()}} You scored {{this.score}} / 60 and answered {{this.questionsCorrect}} / 10.</h2>
   <div class="mb-5">
-    <ul>
-      Here is how you did:
-      <app-quiz-results-table />
-    </ul>
-  </div>
+  <h2 class="font-bold text-xl">{{this.quizService.chosenRegion()}} Quiz</h2>
+  <p>10 Countries • 60 points</p>
+</div>
+
+<div class="mb-5">
+  <h3 class="font-semibold text-xl">Your results were:</h3>
+  <p>{{this.score}} / 60 score</p>
+  <p>{{this.questionsCorrect}} / 10 correct</p>
+  <p>{{quizEndMessage()}}</p>
+</div>
   <div class="flex flex-col">
+    <app-button class="mb-5" content="Quiz Results" width="w-60" (click)="showQuizResults()"/>
     <app-button class="mb-5" content="Play Again" width="w-60" (click)="playQuizAgain()"/>
     <app-button class="mb-5" content="Choose a Continent" width="w-60" (click)="playQuizDifferentContinent()"/>
   </div>
