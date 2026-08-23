@@ -12,7 +12,7 @@ export class Quiz {
   private apiService = inject(Api);
   private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
-  index = signal(9);
+  index = signal(0);
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctAnswers = signal(0);
   score = signal(0);
@@ -28,6 +28,8 @@ export class Quiz {
     ),
   );
   continents = computed(() => this.currentCountryData().continents);
+  allTimeHighScore = signal<number | null>(null);
+  isNewHighScore = signal(false);
 
   languages = computed(() =>
     this.currentCountryData().languages.map((language: any) => language.name),
@@ -81,6 +83,7 @@ export class Quiz {
   );
 
   startQuiz(chosenRegion: string) {
+    this.getHighScore()
     return this.apiService
       .getCountryData(chosenRegion)
       .pipe(map((response) => this.randomiseCountries(response.data.objects, 10)));
@@ -160,7 +163,10 @@ export class Quiz {
   }
 
   hasQuizEnded() {
-    this.index() > 9 && this.router.navigate(['end-game']);
+    if(this.index() > 9){
+      this.checkAndSetHighScore()
+      this.router.navigate(['end-game']);
+    }
   }
 
   mapQuizResult(isCorrect: boolean){
@@ -173,5 +179,31 @@ export class Quiz {
         flag: this.currentCountryData().flag.url_png
       }
     ])
+  }
+
+  getHighScore() {
+    const storedHighScore = localStorage.getItem(
+      `${this.chosenRegion()}HighScore`,
+    );
+  
+    this.allTimeHighScore.set(
+      storedHighScore ? Number(storedHighScore) : null,
+    );
+  }
+  
+  checkAndSetHighScore() {
+    const currentHighScore = this.allTimeHighScore() ?? 0;
+  
+    if (this.score() > currentHighScore) {
+      localStorage.setItem(
+        `${this.chosenRegion()}HighScore`,
+        this.score().toString(),
+      );
+  
+      this.allTimeHighScore.set(this.score());
+      this.isNewHighScore.set(true);
+    } else {
+      this.isNewHighScore.set(false);
+    }
   }
 }

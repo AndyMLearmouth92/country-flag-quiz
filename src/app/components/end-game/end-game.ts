@@ -3,7 +3,6 @@ import { Heading } from '../heading/heading';
 import { Button } from '../button/button';
 import { Quiz } from '../../services/quiz/quiz';
 import { Router } from '@angular/router';
-import { QuizResultsTable } from '../quiz-results-table/quiz-results-table';
 
 @Component({
   selector: 'app-end-game',

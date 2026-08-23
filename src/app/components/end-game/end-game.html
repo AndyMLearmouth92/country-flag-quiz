@@ -11,6 +11,14 @@
   <p>{{this.questionsCorrect}} / 10 correct</p>
   <p>{{quizEndMessage()}}</p>
 </div>
+
+<div class="mb-5">
+@if (this.quizService.isNewHighScore()) {
+  <p>🏆 Well done! A new high score of {{ this.quizService.allTimeHighScore() }} 🏆</p>
+} @else {
+  <p>🏆 Your high score remains at {{ this.quizService.allTimeHighScore() }} 🏆</p>
+}
+</div>
   <div class="flex flex-col">
     <app-button class="mb-5" content="Quiz Results" width="w-60" (click)="showQuizResults()"/>
     <app-button class="mb-5" content="Play Again" width="w-60" (click)="playQuizAgain()"/>
