@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { map } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import { Api } from '../api/api';
 import { COUNTRY_LOOKUP } from '../../constants/country-lookup';
 import { Router } from '@angular/router';
@@ -12,7 +12,8 @@ export class Quiz {
   private apiService = inject(Api);
   private router = inject(Router);
   quizDataCountries = signal<any[]>([]);
-  index = signal(0);
+  index = signal(9);
+  quizStarted = signal(false)
   currentCountryData = computed(() => this.quizDataCountries()[this.index()]);
   correctAnswers = signal(0);
   score = signal(0);
@@ -30,6 +31,7 @@ export class Quiz {
   continents = computed(() => this.currentCountryData().continents);
   allTimeHighScore = signal<number | null>(null);
   isNewHighScore = signal(false);
+  isLoading = signal(false)
 
   languages = computed(() =>
     this.currentCountryData().languages.map((language: any) => language.name),
@@ -83,10 +85,22 @@ export class Quiz {
   );
 
   startQuiz(chosenRegion: string) {
-    this.getHighScore()
-    return this.apiService
-      .getCountryData(chosenRegion)
-      .pipe(map((response) => this.randomiseCountries(response.data.objects, 10)));
+    this.chosenRegion.set(chosenRegion);
+    this.quizStarted.set(true);
+    this.isLoading.set(true);
+    this.getHighScore();
+  
+    return this.apiService.getCountryData(chosenRegion).pipe(
+      map((response) => this.randomiseCountries(response.data.objects, 10)),
+      tap((countries) => {
+        this.quizDataCountries.set(countries);
+        this.isLoading.set(false);
+      }),
+      catchError((error) => {
+        this.isLoading.set(false);
+        throw error;
+      })
+    );
   }
 
   randomiseCountries(countriesData: any, count: number) {

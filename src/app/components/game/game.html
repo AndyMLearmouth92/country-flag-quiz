@@ -1,3 +1,6 @@
+@if(this.quizService.isLoading()){
+  <app-loader />
+} @else {
 <div class="card bg-base-100 shadow-sm flex place-content-center bg-slate-500">
   <app-heading />
   <h3 class="font-bold text-xl">Question {{ questionNumber() }} of 10</h3>
@@ -34,3 +37,4 @@
     }
   </div>
 </div>
+}

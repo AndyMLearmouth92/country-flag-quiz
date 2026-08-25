@@ -19,17 +19,7 @@ export class Welcome {
   ngOnInit(): void {}
 
   selectContinent(chosenRegion: string) {
-    this.quizService.chosenRegion.set(chosenRegion)
-    this.quizService.startQuiz(chosenRegion).subscribe({
-      next: () => {
-        this.router.navigate(['/game']);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        console.log('Complete');
-      },
-    });
+    this.quizService.startQuiz(chosenRegion).subscribe();
+    this.router.navigate(['/game']);
   }
 }

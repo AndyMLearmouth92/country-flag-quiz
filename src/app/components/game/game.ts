@@ -5,10 +5,11 @@ import { Input } from './input/input';
 import { Button } from '../button/button';
 import { Heading } from '../heading/heading';
 import { List } from './list/list';
+import { Loader } from '../loader/loader';
 
 @Component({
   selector: 'app-game',
-  imports: [Flag, Input, Button, Heading, List],
+  imports: [Flag, Input, Button, Heading, List, Loader],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })

@@ -6,7 +6,7 @@ export const gameGuard: CanActivateFn = () => {
     const quizService = inject(Quiz);
     const router = inject(Router);
   
-    return quizService.quizDataCountries().length > 0
+    return quizService.quizStarted()
       ? true
       : router.createUrlTree(['/']);
   };
