@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { CountriesAPIResponse } from '../quiz/country.model';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,16 @@ export class Api {
     const url = chosenRegion === 'World' ? baseUrl : baseUrl + `&region=${chosenRegion}`;
     return this.httpClient.get<CountriesAPIResponse>(url, {
       headers: { Authorization: 'Bearer rc_live_e7cac0676d994f4580bdda4ec42daa6a' },
-    });
+    }).pipe(
+      map(response => ({
+        ...response,
+        data: {
+          ...response.data,
+          objects: response.data.objects.filter(
+            country => country.names.common !== 'Northern Cyprus'
+          )
+        }
+      }))
+    )
   }
 }
